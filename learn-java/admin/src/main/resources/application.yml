@@ -1,0 +1,82 @@
+server:
+  port: 2000
+spring:
+  application:
+    name: admin
+  datasource:
+    url: jdbc:mysql://localhost:3306/bmsys?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # hikari数据库连接池
+    hikari:
+      pool-name: Retail_HikariCP
+      minimum-idle: 5 #最小空闲连接数量
+      idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
+      maximum-pool-size: 10 #连接池最大连接数，默认是10
+      auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
+      connection-test-query: SELECT 1
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  cache:
+    type: redis
+  redis:
+    database: 0
+    host: localhost
+    password:
+    port: 6379
+    timeout: 1000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  type-aliases-package: com.learn.admin.entity
+  configuration:
+    cache-enabled: false
+    call-setters-on-nulls: true
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+security:
+  config:
+    anon-uri:
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /**/*.html
+      - /*.html
+      - /swagger-ui.html
+      - /swagger-ui/**
+      - /swagger-resources/**
+      - /v2/api-docs
+      - /v3/api-docs
+      - /webjars/**
+      - /webSocket/**
+      - /learn/login
+      - /learn/refresh
+      - /user/register
+      - /test/anon
+    header: Token
+    token-validity-in-hours: 2
+    online-key: Bearer
+
+task:
+  pool:
+    core-pool-size: 5
+    max-pool-size: 10
+    keep-alive-seconds: 60
+    queue-capacity: 20
