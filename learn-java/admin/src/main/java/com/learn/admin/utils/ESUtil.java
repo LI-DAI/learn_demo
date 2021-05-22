@@ -1,7 +1,7 @@
 package com.learn.admin.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.convert.Convert;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
@@ -20,20 +20,26 @@ public class ESUtil {
      * @return {@link XContentBuilder}
      */
     public static XContentBuilder object2XContentBuilder(Object object) throws Exception {
-        JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object));
-        return map2XContentBuilder(jsonObject);
+        Map<String, Object> objectMap = Convert.toMap(String.class, Object.class, object);
+        return map2XContentBuilder(objectMap);
     }
 
     /**
      * 将 Map 转化为 XContentBuilder
      *
-     * @param map 要转换的map
+     * @param objectMap 要转换的map
      * @return {@link XContentBuilder}
      * @throws Exception /
      */
-    public static XContentBuilder map2XContentBuilder(Map<String, Object> map) throws Exception {
-        XContentBuilder xContentBuilder = XContentFactory.jsonBuilder().startObject();
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
+    public static XContentBuilder map2XContentBuilder(Map<String, Object> objectMap) throws Exception {
+        XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
+        
+        if (CollectionUtil.isEmpty(objectMap)) {
+            return xContentBuilder;
+        }
+
+        xContentBuilder.startObject();
+        for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
             xContentBuilder.field(entry.getKey(), entry.getValue());
         }
         xContentBuilder.endObject();
