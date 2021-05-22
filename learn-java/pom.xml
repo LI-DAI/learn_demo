@@ -17,13 +17,14 @@
     </modules>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
-        <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>2.3.0.RELEASE</spring-boot.version>
+        <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
         <hutool-version>5.3.5</hutool-version>
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <fastjson.version>1.2.75</fastjson.version>
+        <elasticsearch.version>7.2.0</elasticsearch.version>
     </properties>
 
 

@@ -39,6 +39,11 @@ spring:
     multipart:
       enabled: true
       max-file-size: 100MB
+  elasticsearch:
+    rest:
+      uris: http://172.28.200.85:9200
+      read-timeout: 30s
+      connection-timeout: 5s
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml
@@ -70,6 +75,7 @@ security:
       - /learn/refresh
       - /user/register
       - /test/anon
+      - /es/**
     header: Token
     token-validity-in-hours: 2
     online-key: Bearer
