@@ -4,9 +4,9 @@ spring:
   application:
     name: admin
   datasource:
-    url: jdbc:mysql://localhost:3306/bmsys?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
-    username: root
-    password: 123456
+    url: jdbc:mysql://rm-uf65wgf088nv3k461oo.mysql.rds.aliyuncs.com:3306/bmsys?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+    username: ld
+    password: Ld1213+@
     driver-class-name: com.mysql.cj.jdbc.Driver
     # hikari数据库连接池
     hikari:
@@ -39,11 +39,11 @@ spring:
     multipart:
       enabled: true
       max-file-size: 100MB
-  elasticsearch:
-    rest:
-      uris: http://172.28.200.85:9200
-      read-timeout: 30s
-      connection-timeout: 5s
+#  elasticsearch:
+#    rest:
+#      uris: http://172.28.200.85:9200
+#      read-timeout: 30s
+#      connection-timeout: 5s
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml
@@ -52,8 +52,7 @@ mybatis-plus:
     cache-enabled: false
     call-setters-on-nulls: true
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
 security:
   config:
@@ -86,3 +85,7 @@ task:
     max-pool-size: 10
     keep-alive-seconds: 60
     queue-capacity: 20
+
+logging:
+  level:
+    root: info

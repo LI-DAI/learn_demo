@@ -39,6 +39,7 @@ import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,6 +53,7 @@ import java.util.stream.Stream;
  */
 @RestController
 @RequestMapping("/es")
+@ConditionalOnBean(RestHighLevelClient.class)
 public class ESController {
 
     private final RestHighLevelClient restHighLevelClient;
