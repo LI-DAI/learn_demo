@@ -1,6 +1,8 @@
 server:
   port: 2000
 spring:
+  profiles:
+    active: dev
   application:
     name: admin
   datasource:
@@ -44,7 +46,6 @@ spring:
 #      uris: http://172.28.200.85:9200
 #      read-timeout: 30s
 #      connection-timeout: 5s
-
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml
   type-aliases-package: com.learn.admin.entity
@@ -52,8 +53,9 @@ mybatis-plus:
     cache-enabled: false
     call-setters-on-nulls: true
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+  global-config:
+    banner: false
 security:
   config:
     anon-uri:
@@ -87,5 +89,4 @@ task:
     queue-capacity: 20
 
 logging:
-  level:
-    root: info
+  config: classpath:logback-spring.xml

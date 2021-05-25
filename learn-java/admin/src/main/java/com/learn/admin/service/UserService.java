@@ -1,8 +1,8 @@
 package com.learn.admin.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.learn.admin.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -33,5 +33,13 @@ public interface UserService extends IService<User> {
      * @param user 信息
      */
     User updateUser(User user);
+
+
+    /**
+     * 批量导入用户
+     *
+     * @param file 用户信息文件
+     */
+    void importUsers(MultipartFile file);
 
 }

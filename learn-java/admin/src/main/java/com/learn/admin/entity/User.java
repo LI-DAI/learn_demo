@@ -1,5 +1,6 @@
 package com.learn.admin.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -24,16 +25,21 @@ public class User implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer userId;
 
+    @ExcelProperty(value = "用户名")
     private String username;
 
+    @ExcelProperty(value = "昵称")
     private String nickname;
 
+    @ExcelProperty(value = "邮箱")
     @Email(message = "邮箱格式异常")
     private String email;
 
+    @ExcelProperty(value = "电话")
     @Pattern(regexp = Constant.REGEX_PHONE, message = "电话格式异常")
     private String phone;
 
+    @ExcelProperty("性别")
     private String gender;
 
     private String password;

@@ -12,20 +12,20 @@ import java.util.List;
  */
 public class SecurityUtil {
 
-    public LoginUser loginUser() {
+    public static LoginUser loginUser() {
         return (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public String getUsername() {
+    public static String getUsername() {
         return loginUser().getUsername();
     }
 
-    public Integer getUserId() {
+    public static Integer getUserId() {
         return loginUser().getUserId();
     }
 
     @SuppressWarnings("unchecked")
-    public List<GrantedAuthority> getAuthorities() {
+    public static List<GrantedAuthority> getAuthorities() {
         return (List<GrantedAuthority>) loginUser().getAuthorities();
     }
 }

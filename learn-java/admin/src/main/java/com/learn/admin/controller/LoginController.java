@@ -8,6 +8,7 @@ import com.learn.common.utils.RedisUtil;
 import com.learn.security.config.SecurityProperties;
 import com.learn.security.entity.LoginUser;
 import com.learn.security.utils.JwtTokenUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,7 @@ import static com.learn.common.entity.ResultCode.EXPIRE_TOKEN;
  * @author LD
  * @date 2021/5/15 20:20
  */
+@Slf4j
 @RestController
 @RequestMapping("/learn")
 public class LoginController {
