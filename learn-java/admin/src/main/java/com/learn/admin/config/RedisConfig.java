@@ -1,4 +1,4 @@
-package com.learn.common.config;
+package com.learn.admin.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;

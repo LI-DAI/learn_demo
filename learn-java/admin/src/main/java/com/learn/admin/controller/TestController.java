@@ -2,7 +2,7 @@ package com.learn.admin.controller;
 
 import com.learn.admin.entity.UserRole;
 import com.learn.common.entity.Result;
-import com.learn.common.utils.RedisUtil;
+import com.learn.admin.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

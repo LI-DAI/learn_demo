@@ -4,7 +4,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.learn.admin.entity.User;
 import com.learn.common.entity.Result;
-import com.learn.common.utils.RedisUtil;
+import com.learn.admin.utils.RedisUtil;
 import com.learn.security.config.SecurityProperties;
 import com.learn.security.entity.LoginUser;
 import com.learn.security.utils.JwtTokenUtil;

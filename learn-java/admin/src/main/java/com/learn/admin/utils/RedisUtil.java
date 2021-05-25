@@ -1,7 +1,8 @@
-package com.learn.common.utils;
+package com.learn.admin.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.learn.common.utils.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -18,7 +19,6 @@ import java.util.concurrent.TimeUnit;
  * @date 2021/4/18 10:45
  */
 @Slf4j
-@SuppressWarnings({"unchecked", "unused","null"})
 public class RedisUtil {
 
     private static RedisTemplate<String, Object> redisTemplate;

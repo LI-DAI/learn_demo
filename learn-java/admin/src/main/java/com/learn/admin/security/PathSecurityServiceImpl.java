@@ -10,7 +10,7 @@ import com.learn.admin.entity.Menu;
 import com.learn.admin.entity.Role;
 import com.learn.admin.entity.User;
 import com.learn.admin.service.UserService;
-import com.learn.common.utils.RedisUtil;
+import com.learn.admin.utils.RedisUtil;
 import com.learn.security.config.SecurityProperties;
 import com.learn.security.entity.LoginUser;
 import com.learn.security.service.PathSecurityService;
