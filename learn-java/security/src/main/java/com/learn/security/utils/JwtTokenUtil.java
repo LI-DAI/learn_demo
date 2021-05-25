@@ -18,7 +18,8 @@ import java.util.Map;
 @Slf4j
 public class JwtTokenUtil {
 
-    private static Integer DEFAULT_EXPIRE = 2;
+    private static final Integer DEFAULT_EXPIRE =
+            SpringContextUtil.getProperties("security.config.token-validity-in-hours", 2, Integer.class);
 
     private static final Long TOKEN_EXPIRATION = DEFAULT_EXPIRE * 60 * 60 * 1000L;
 
@@ -28,17 +29,6 @@ public class JwtTokenUtil {
     private static final String SECRET = "C*F-JaNdRgUkXn2r5u8x/A?D(G+KbPeShVmYq3s6v9y$B&E)H@McQfTjWnZr4u7w";
     private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(Base64.getEncoder().encode(SECRET.getBytes()));
     private static final JwtParser PARSER = Jwts.parserBuilder().setSigningKey(SECRET_KEY).build();
-
-    static {
-        SpringContextUtil.addCallBack(() -> {
-            try {
-                DEFAULT_EXPIRE = SpringContextUtil.getProperties("security.config.token-validity-in-hours", DEFAULT_EXPIRE, Integer.class);
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            }
-        });
-    }
-
 
     public static String createAccessToken(String sign) {
         return createToken(sign, TOKEN_EXPIRATION);
