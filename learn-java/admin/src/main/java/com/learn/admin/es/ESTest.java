@@ -114,6 +114,8 @@ public class ESTest {
                     DeleteResponse deleteResponse = (DeleteResponse) itemResponse;
                     System.out.println(deleteResponse.toString());
                     break;
+                default:
+                    break;
             }
         }
 

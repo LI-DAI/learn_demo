@@ -36,7 +36,7 @@ public class PathAccessDecisionManager implements AccessDecisionManager {
             //访问需要的权限
             String need = configAttribute.getAttribute();
 
-            if (need.equals("ROLE_LOGIN")) {
+            if ("ROLE_LOGIN".equals(need)) {
                 if (authentication instanceof AnonymousAuthenticationToken) {
                     throw new AuthenticationServiceException("未认证");
                 } else {

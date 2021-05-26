@@ -32,8 +32,9 @@ import static org.springframework.data.redis.cache.RedisCacheConfiguration.defau
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
 
-    private static final StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-    private static final GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer
+
+    private static final StringRedisSerializer STRING_REDIS_SERIALIZER = new StringRedisSerializer();
+    private static final GenericJackson2JsonRedisSerializer GENERIC_JACKSON_2_JSON_REDIS_SERIALIZER
             = new GenericJackson2JsonRedisSerializer();
 
     private final LettuceConnectionFactory connectionFactory;
@@ -46,10 +47,10 @@ public class RedisConfig extends CachingConfigurerSupport {
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
-        redisTemplate.setKeySerializer(stringRedisSerializer);
-        redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
-        redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer);
+        redisTemplate.setKeySerializer(STRING_REDIS_SERIALIZER);
+        redisTemplate.setHashKeySerializer(STRING_REDIS_SERIALIZER);
+        redisTemplate.setValueSerializer(GENERIC_JACKSON_2_JSON_REDIS_SERIALIZER);
+        redisTemplate.setHashValueSerializer(GENERIC_JACKSON_2_JSON_REDIS_SERIALIZER);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
@@ -103,8 +104,8 @@ public class RedisConfig extends CachingConfigurerSupport {
         RedisCacheConfiguration cacheConfiguration =
                 defaultCacheConfig()
                         .disableCachingNullValues()
-                        .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(stringRedisSerializer))
-                        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(genericJackson2JsonRedisSerializer));
+                        .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(STRING_REDIS_SERIALIZER))
+                        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(GENERIC_JACKSON_2_JSON_REDIS_SERIALIZER));
         return RedisCacheManager.builder(connectionFactory).cacheDefaults(cacheConfiguration).build();
 
     }

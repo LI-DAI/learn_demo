@@ -56,7 +56,7 @@ public class PathSecurityServiceImpl implements PathSecurityService {
     @Override
     public Map<String, String> loadRequestMap() {
         List<Menu> menus = menuMapper.selectList(Wrappers.emptyWrapper());
-        return menus.stream().filter(Objects::nonNull).filter(menu -> !menu.getUrl().equals("#"))
+        return menus.stream().filter(Objects::nonNull).filter(menu -> !Objects.equals(menu.getUrl(), "#"))
                 .collect(Collectors.toMap(Menu::getUrl, Menu::getPerms));
     }
 

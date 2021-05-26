@@ -31,6 +31,7 @@ public interface UserService extends IService<User> {
      * 修改用户信息
      *
      * @param user 信息
+     * @return /
      */
     User updateUser(User user);
 

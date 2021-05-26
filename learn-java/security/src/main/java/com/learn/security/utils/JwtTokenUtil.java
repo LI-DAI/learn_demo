@@ -22,7 +22,9 @@ public class JwtTokenUtil {
 
     private static final Long TOKEN_EXPIRATION = DEFAULT_EXPIRE * 60 * 60 * 1000L;
 
-    // refresh_token 比 access_token 有效期多一个小时
+    /**
+     * refresh_token 比 access_token 有效期多一个小时
+     */
     private static final Long REFRESH_TOKEN_EXPIRATION = (DEFAULT_EXPIRE + 1) * 60 * 60 * 1000L;
 
     private static final String SECRET = "C*F-JaNdRgUkXn2r5u8x/A?D(G+KbPeShVmYq3s6v9y$B&E)H@McQfTjWnZr4u7w";
