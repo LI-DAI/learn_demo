@@ -52,7 +52,7 @@ public class SpringContextUtil implements ApplicationContextAware {
      * @param defaultValue 默认值
      * @param requiredType 返回值类型Class
      * @param <T>          返回值类型
-     * @return
+     * @return /
      */
     public static <T> T getProperties(String property, T defaultValue, Class<T> requiredType) {
         T result = defaultValue;

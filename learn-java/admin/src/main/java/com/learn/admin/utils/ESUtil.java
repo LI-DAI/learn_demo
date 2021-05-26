@@ -1,7 +1,7 @@
 package com.learn.admin.utils;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.convert.Convert;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
@@ -20,7 +20,7 @@ public class ESUtil {
      * @return {@link XContentBuilder}
      */
     public static XContentBuilder object2XContentBuilder(Object object) throws Exception {
-        Map<String, Object> objectMap = Convert.toMap(String.class, Object.class, object);
+        Map<String, Object> objectMap = BeanUtil.beanToMap(object);
         return map2XContentBuilder(objectMap);
     }
 
@@ -33,7 +33,7 @@ public class ESUtil {
      */
     public static XContentBuilder map2XContentBuilder(Map<String, Object> objectMap) throws Exception {
         XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
-        
+
         if (CollectionUtil.isEmpty(objectMap)) {
             return xContentBuilder;
         }

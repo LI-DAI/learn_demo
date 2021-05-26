@@ -4,6 +4,7 @@ import cn.hutool.core.map.MapUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.ImmutableList;
 import com.learn.admin.es.model.Person;
+import com.learn.admin.utils.ESUtil;
 import lombok.SneakyThrows;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -87,7 +88,7 @@ public class ESController {
     @PostMapping("/add")
     public void test4() throws Exception {
         Person ming = new Person("小明就是小明", 20);
-        IndexRequest request = new IndexRequest("test_index").id("1").source(JSON.toJSONString(ming), XContentType.JSON);
+        IndexRequest request = new IndexRequest("test_index").id("1").source(ESUtil.object2XContentBuilder(ming));
 
         //设置超时
         request.timeout(TimeValue.timeValueSeconds(3));
