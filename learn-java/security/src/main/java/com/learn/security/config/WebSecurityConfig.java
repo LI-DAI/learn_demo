@@ -1,6 +1,7 @@
 package com.learn.security.config;
 
-import cn.hutool.core.convert.Convert;
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.ArrayUtil;
 import com.learn.common.entity.Result;
 import com.learn.common.entity.ResultCode;
 import com.learn.security.path.PathAccessDecisionManager;
@@ -21,6 +22,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import static com.learn.common.utils.CommonUtil.print;
 
@@ -101,7 +105,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public String[] anonymousAccess() {
-        return Convert.toStrArray(properties.getAnonUri());
+        return properties.getAnonUri().toArray(new String[0]);
     }
 
     @Bean
