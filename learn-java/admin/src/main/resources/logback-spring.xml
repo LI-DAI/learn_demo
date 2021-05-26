@@ -69,14 +69,20 @@
 
     <logger name="org.springframework.web" level="ERROR"/>
     <logger name="org.springboot.sample" level="ERROR"/>
-    <!--这里是自己的代码包-->
-    <logger name="com.learn" level="DEBUG"/>
+
 
     <!-- 日志输出级别， 开发、测试环境 -->
     <springProfile name="dev">
         <root level="DEBUG">
             <appender-ref ref="ACCESS"/>
         </root>
+        <!--这里是自己的代码包-->
+        <logger name="com.learn" level="DEBUG"/>
+    </springProfile>
+
+    <!--生产环境日志级别-->
+    <springProfile name="prod">
+        <logger name="com.learn" level="INFO"/>
     </springProfile>
 
     <!-- 所有环境均需要记录错误日志 -->

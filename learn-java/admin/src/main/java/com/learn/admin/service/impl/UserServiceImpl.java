@@ -8,11 +8,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.learn.admin.dao.UserMapper;
 import com.learn.admin.entity.User;
 import com.learn.admin.entity.UserRole;
+import com.learn.admin.enums.Enabled;
 import com.learn.admin.service.UserRoleService;
 import com.learn.admin.service.UserService;
 import com.learn.common.exception.BadRequestException;
 import com.learn.common.utils.EasyExcelUtil;
-import com.learn.security.utils.SecurityUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -77,30 +78,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @SneakyThrows
     public void importUsers(MultipartFile file) {
         InputStream inputStream = file.getInputStream();
-        String loginName = SecurityUtil.getUsername();
-        List<String> names = listObjs(Wrappers.<User>lambdaQuery().select(User::getUsername).eq(User::getEnabled, 1), obj -> (String) obj);
+        Wrapper<User> wrapper = Wrappers.<User>lambdaQuery().select(User::getUsername).eq(User::getEnabled, Enabled.ENABLED.getValue());
+        List<String> names = listObjs(wrapper, obj -> (String) obj);
+        final AtomicInteger count = new AtomicInteger();
         EasyExcel.read(inputStream, User.class, EasyExcelUtil.getListener((List<User> users) -> {
-
             //如果username已存在则直接移除
             users.removeIf(user -> names.contains(user.getUsername()));
-
             for (User user : users) {
-                //导入用户默认密码为：hello
                 user.setPassword(passwordEncoder.encode("hello"));
             }
             saveBatch(users);
-
+            //为所有用户创建默认角色 ，默认为 COMMON
             List<UserRole> userRoles = users.stream().map(User::getUserId)
-                    //这里2为 COMMON 角色的 id
                     .map(userId -> new UserRole(null, userId, 2)).collect(Collectors.toList());
             userRoleService.saveBatch(userRoles);
-
-            log.info("{} 执行批量导入用户操作，导入数量：{}", loginName, users.size());
-
+            log.info("正在执行批量导入操作，导入数量：{}", count.addAndGet(users.size()));
         })).sheet().doRead();
-
+        log.info("批量导入操作完成，导入总数：{}", count.get());
         IoUtil.close(inputStream);
-
     }
 
 }

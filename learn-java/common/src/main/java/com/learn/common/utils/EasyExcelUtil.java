@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  */
 public class EasyExcelUtil {
 
-    private static final int DEFAULT_SIZE = 20;
+    private static final int DEFAULT_SIZE = 50;
 
     public static <T> AnalysisEventListener<T> getListener(Consumer<List<T>> consumer, int size) {
         return new AnalysisEventListener<T>() {
