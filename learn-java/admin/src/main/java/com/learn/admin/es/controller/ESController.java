@@ -2,6 +2,7 @@ package com.learn.admin.es.controller;
 
 import cn.hutool.core.map.MapUtil;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.ImmutableList;
 import com.learn.admin.es.model.Person;
 import lombok.SneakyThrows;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -141,7 +142,7 @@ public class ESController {
     @PostMapping("/bulk_add")
     @SneakyThrows
     public void test9() {
-        List<Person> people = List.of(
+        List<Person> people = ImmutableList.of(
                 new Person("2", "德玛西亚之力", 33),
                 new Person("3", "艾瑞利亚", 18),
                 new Person("4", "诺克萨斯之手", 40));

@@ -2,9 +2,10 @@ package com.learn.admin.controller;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
+import com.google.common.collect.ImmutableMap;
 import com.learn.admin.entity.User;
-import com.learn.common.entity.Result;
 import com.learn.admin.utils.RedisUtil;
+import com.learn.common.entity.Result;
 import com.learn.security.config.SecurityProperties;
 import com.learn.security.entity.LoginUser;
 import com.learn.security.utils.JwtTokenUtil;
@@ -51,15 +52,15 @@ public class LoginController {
         LoginUser authUser = (LoginUser) authentication.getPrincipal();
         String accessToken = securityProperties.getOnlineKey() + JwtTokenUtil.createAccessToken(username);
         String refreshToken = JwtTokenUtil.createRefreshToken(REFRESH_PREFIX + username);
-        Map<String, Object> authInfo = Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken, "user", authUser);
+        Map<String, Object> authInfo = ImmutableMap.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken, "user", authUser);
         return Result.data(authInfo, "登陆成功");
     }
 
     @PostMapping("/logout")
     public Result<Object> logout(HttpServletRequest request) {
-        var token = request.getHeader(AUTHENTICATION).substring(securityProperties.getOnlineKey().length()).trim();
-        var tokenMap = JwtTokenUtil.parseJwtToken(token);
-        var username = MapUtil.getStr(tokenMap, "username");
+        String token = request.getHeader(AUTHENTICATION).substring(securityProperties.getOnlineKey().length()).trim();
+        Map<String, Object> tokenMap = JwtTokenUtil.parseJwtToken(token);
+        String username = MapUtil.getStr(tokenMap, "username");
         RedisUtil.delete(getAuthoritiesCacheName(username));
         return Result.data(null, "注销成功");
     }
@@ -77,7 +78,7 @@ public class LoginController {
         String username = refreshName.replace(REFRESH_PREFIX, "");
         String accessToken = securityProperties.getOnlineKey() + JwtTokenUtil.createAccessToken(username);
         String refreshToken = JwtTokenUtil.createRefreshToken(refreshName);
-        Map<String, String> map = Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+        Map<String, String> map = ImmutableMap.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
         return Result.data(map);
     }
 }
