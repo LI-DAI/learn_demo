@@ -6,6 +6,9 @@ package com.learn.common.utils;
  */
 public interface CallBack {
 
+    /**
+     * 执行
+     */
     void executor();
 
     /**

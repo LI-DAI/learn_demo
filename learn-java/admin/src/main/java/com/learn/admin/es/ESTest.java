@@ -147,7 +147,7 @@ public class ESTest {
 
 
     public static IndexRequest createIndex2() {
-        Map<String, Object> jsonMap = new HashMap<>();
+        Map<String, Object> jsonMap = new HashMap<>(8);
         jsonMap.put("user", "小明");
         jsonMap.put("postDate", new Date());
         jsonMap.put("message", "trying out Elasticsearch");
@@ -187,7 +187,7 @@ public class ESTest {
 
     public static UpdateRequest updateRequest() {
         UpdateRequest request = new UpdateRequest("posts", "1");
-        Map<String, Object> jsonMap = new HashMap<>();
+        Map<String, Object> jsonMap = new HashMap<>(8);
         jsonMap.put("user", "小红");
         jsonMap.put("postDate", new Date());
         request.doc(jsonMap);

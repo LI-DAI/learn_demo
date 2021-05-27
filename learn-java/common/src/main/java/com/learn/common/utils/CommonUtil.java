@@ -1,7 +1,7 @@
 package com.learn.common.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.learn.common.entity.Result;
-import com.learn.common.utils.jackson.JacksonUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class CommonUtil {
     public static void print(Result<Object> result, HttpServletResponse response) {
         response.setContentType("application/json;charset=UTF-8");
         try (PrintWriter writer = response.getWriter()) {
-            writer.println(JacksonUtils.writeValue(result));
+            writer.println(JSON.toJSONString(result));
         } catch (IOException e) {
             e.printStackTrace();
         }
