@@ -85,11 +85,8 @@ public class RedisUtil {
         while (cursor.hasNext()) {
             result.add(new String(cursor.next()));
         }
-        try {
-            RedisConnectionUtils.releaseConnection(rc, factory, false);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
+        //释放链接
+        RedisConnectionUtils.releaseConnection(rc, factory, false);
         return result;
     }
 
@@ -123,11 +120,8 @@ public class RedisUtil {
             tmpIndex++;
             cursor.next();
         }
-        try {
-            RedisConnectionUtils.releaseConnection(rc, factory, false);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
+        //释放链接
+        RedisConnectionUtils.releaseConnection(rc, factory, false);
         return result;
     }
 
