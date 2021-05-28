@@ -1,6 +1,7 @@
 package com.learn.admin.utils;
 
 import com.google.common.collect.Sets;
+import com.learn.common.constant.Constant;
 import com.learn.common.utils.SpringContextUtil;
 import io.lettuce.core.RedisException;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,8 @@ import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -83,7 +86,7 @@ public class RedisUtil {
         Cursor<byte[]> cursor = rc.scan(options);
         List<String> result = new ArrayList<>();
         while (cursor.hasNext()) {
-            result.add(new String(cursor.next()));
+            result.add(new String(cursor.next(), StandardCharsets.UTF_8));
         }
         //释放链接
         RedisConnectionUtils.releaseConnection(rc, factory, false);
