@@ -11,7 +11,6 @@ import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -100,7 +99,7 @@ public class RedisUtil {
      * @param size       每页数目
      * @return /
      */
-    public static List<String> findKeysForPage(String patternKey, int page, int size) {
+    public static List<String> pageScan(String patternKey, int page, int size) {
         ScanOptions options = ScanOptions.scanOptions().match(patternKey).build();
         RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
         RedisConnection rc = Objects.requireNonNull(factory).getConnection();
@@ -199,7 +198,7 @@ public class RedisUtil {
         if (time > 0) {
             redisTemplate.opsForValue().set(key, value, time, timeUnit);
         } else {
-            set(key, value);
+            redisTemplate.opsForValue().set(key, value);
         }
     }
 
