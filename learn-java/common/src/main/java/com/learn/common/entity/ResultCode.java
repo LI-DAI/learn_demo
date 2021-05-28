@@ -20,8 +20,8 @@ public enum ResultCode {
     LOCKED(-103, "账户已锁定"),
     EXPIRE_TOKEN(-104, "无效的Token");
 
-    final int code;
+    private final Integer code;
 
-    final String message;
+    private final String message;
 
 }
