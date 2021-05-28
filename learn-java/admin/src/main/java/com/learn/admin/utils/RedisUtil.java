@@ -3,7 +3,6 @@ package com.learn.admin.utils;
 import com.google.common.collect.Sets;
 import com.learn.common.utils.SpringContextUtil;
 import io.lettuce.core.RedisException;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -42,7 +41,6 @@ public class RedisUtil {
      * @param key  键
      * @param time 时间(秒)
      */
-    @SneakyThrows
     public static void expire(String key, long time) {
         expire(key, time, TimeUnit.SECONDS);
     }
@@ -54,7 +52,6 @@ public class RedisUtil {
      * @param time     时间(秒)
      * @param timeUnit 单位
      */
-    @SneakyThrows
     public static void expire(String key, long time, TimeUnit timeUnit) {
         if (time > 0) {
             redisTemplate.expire(key, time, timeUnit);
