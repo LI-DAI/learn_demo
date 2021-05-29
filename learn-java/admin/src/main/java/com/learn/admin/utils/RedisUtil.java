@@ -1,6 +1,7 @@
 package com.learn.admin.utils;
 
 import com.google.common.collect.Sets;
+import com.learn.common.entity.Page;
 import com.learn.common.utils.SpringContextUtil;
 import io.lettuce.core.RedisException;
 import lombok.extern.slf4j.Slf4j;
@@ -99,31 +100,29 @@ public class RedisUtil {
      * @param size       每页数目
      * @return /
      */
-    public static List<String> pageScan(String patternKey, int page, int size) {
+    public static Page<String> pageScan(String patternKey, int page, int size) {
         ScanOptions options = ScanOptions.scanOptions().match(patternKey).build();
         RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
         RedisConnection rc = Objects.requireNonNull(factory).getConnection();
         Cursor<byte[]> cursor = rc.scan(options);
         List<String> result = new ArrayList<>(size);
-        int tmpIndex = 0;
-        int fromIndex = page * size;
-        int toIndex = page * size + size;
+        int index = 0;
+        int form = (page - 1) * size;
+        int to = form + size;
+        long total = 0;
         while (cursor.hasNext()) {
-            if (tmpIndex >= fromIndex && tmpIndex < toIndex) {
+            total++;
+            if (index >= form && index < to) {
                 result.add(new String(cursor.next(), StandardCharsets.UTF_8));
-                tmpIndex++;
+                index++;
                 continue;
             }
-            // 获取到满足条件的数据后,就可以退出了
-            if (tmpIndex >= toIndex) {
-                break;
-            }
-            tmpIndex++;
+            index++;
             cursor.next();
         }
         //释放链接
         RedisConnectionUtils.releaseConnection(rc, factory, false);
-        return result;
+        return new Page<>(page, size, total, result);
     }
 
     /**
