@@ -41,6 +41,20 @@ spring:
     multipart:
       enabled: true
       max-file-size: 100MB
+  #task和scheduler配置，有默认配置
+  task:
+    execution:
+      threadNamePrefix: learn-task-
+      pool:
+        core-size: 8
+        max-size: 100
+        keep-alive: 60s
+        queue-capacity: 100
+    scheduling:
+      thread-name-prefix: learn-scheduling-
+      pool:
+        size: 3
+
 #  elasticsearch:
 #    rest:
 #      uris: http://172.28.200.85:9200
@@ -67,7 +81,6 @@ security:
       - /**/*.ico
       - /**/*.html
       - /*.html
-      - /swagger-ui.html
       - /swagger-ui/**
       - /swagger-resources/**
       - /v2/api-docs
@@ -77,7 +90,6 @@ security:
       - /learn/login
       - /learn/refresh
       - /user/register
-      - /test/anon
       - /es/**
     header: Token
     token-validity-in-hours: 2

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * @author LD
  * @date 2021/5/24 17:52
@@ -25,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/import")
-    public Result<String> importUsers(@RequestParam("file") MultipartFile file) {
+    public Result<String> importUsers(@RequestParam("file") MultipartFile file) throws IOException {
         userService.importUsers(file);
         return Result.data(null);
     }

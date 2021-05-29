@@ -13,8 +13,10 @@ public interface Constant {
     String AUTHENTICATION = "Token";
     String REFRESH_PREFIX = "refresh_";
 
-    String ACCESS_TOKEN  = "access_token";
-    String REFRESH_TOKEN  = "refresh_token";
+    String ACCESS_TOKEN = "access_token";
+    String REFRESH_TOKEN = "refresh_token";
+
+    String ANON_CACHE_KEY = "anonymousCache";
 
     String AUTHORITY_CACHE_PREFIX = "authorities_";
 

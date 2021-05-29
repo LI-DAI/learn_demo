@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.learn.admin.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 
 /**
  * @author LD
@@ -41,6 +43,6 @@ public interface UserService extends IService<User> {
      *
      * @param file 用户信息文件
      */
-    void importUsers(MultipartFile file);
+    void importUsers(MultipartFile file) throws IOException;
 
 }

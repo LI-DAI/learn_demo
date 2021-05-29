@@ -1,9 +1,9 @@
 package com.learn.security.config;
 
-import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.convert.Convert;
 import com.learn.common.entity.Result;
 import com.learn.common.entity.ResultCode;
+import com.learn.security.anon.AnonymousAccessProcess;
 import com.learn.security.path.PathAccessDecisionManager;
 import com.learn.security.path.PathFilterInvocationSecurityMetadataSource;
 import com.learn.security.service.PathSecurityService;
@@ -22,11 +22,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Set;
 
+import static com.learn.common.constant.Constant.ANON_CACHE_KEY;
 import static com.learn.common.utils.CommonUtil.print;
+import static com.learn.security.anon.AnonymousAccessProcess.anonymousCache;
 
 /**
  * @author LD
@@ -37,18 +39,17 @@ import static com.learn.common.utils.CommonUtil.print;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SecurityProperties properties;
-
     private final PathAccessDecisionManager pathAccessDecisionManager;
-
     private final PathFilterInvocationSecurityMetadataSource securityMetadataSource;
-
     private final PathSecurityService pathSecurityService;
+    private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-    public WebSecurityConfig(SecurityProperties properties, PathAccessDecisionManager pathAccessDecisionManager, PathFilterInvocationSecurityMetadataSource securityMetadataSource, PathSecurityService pathSecurityService) {
+    public WebSecurityConfig(SecurityProperties properties, PathAccessDecisionManager pathAccessDecisionManager, PathFilterInvocationSecurityMetadataSource securityMetadataSource, PathSecurityService pathSecurityService, RequestMappingHandlerMapping requestMappingHandlerMapping) {
         this.properties = properties;
         this.pathAccessDecisionManager = pathAccessDecisionManager;
         this.securityMetadataSource = securityMetadataSource;
         this.pathSecurityService = pathSecurityService;
+        this.requestMappingHandlerMapping = requestMappingHandlerMapping;
     }
 
     @Override
@@ -64,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        AnonymousAccessProcess.loadAnonymousAccessProcess(requestMappingHandlerMapping, properties);
         http
                 .addFilterBefore(new JwtAuthenticationFilter(pathSecurityService, properties), UsernamePasswordAuthenticationFilter.class)
                 //禁用csrf,
@@ -105,7 +107,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public String[] anonymousAccess() {
-        return properties.getAnonUri().toArray(new String[0]);
+        Set<String> cache = anonymousCache.getIfPresent(ANON_CACHE_KEY);
+        return Convert.toStrArray(cache);
     }
 
     @Bean

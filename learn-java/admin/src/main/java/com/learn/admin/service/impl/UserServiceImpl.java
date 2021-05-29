@@ -13,7 +13,6 @@ import com.learn.admin.service.UserRoleService;
 import com.learn.admin.service.UserService;
 import com.learn.common.exception.BadRequestException;
 import com.learn.common.utils.EasyExcelUtil;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -75,8 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    @SneakyThrows
-    public void importUsers(MultipartFile file) {
+    public void importUsers(MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
         Wrapper<User> wrapper = Wrappers.<User>lambdaQuery().select(User::getUsername).eq(User::getEnabled, Enabled.ENABLED.getValue());
         List<String> names = listObjs(wrapper, obj -> (String) obj);
@@ -93,7 +92,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                     .map(userId -> new UserRole(null, userId, 2)).collect(Collectors.toList());
             userRoleService.saveBatch(userRoles);
             log.info("正在执行批量导入操作，导入数量：{}", count.addAndGet(users.size()));
-        })).sheet().doRead();
+        })).sheet().doReadSync();
         log.info("批量导入操作完成，导入总数：{}", count.get());
         IoUtil.close(inputStream);
     }
