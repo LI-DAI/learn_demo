@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author LD
  * @date 2021/5/15 18:43
- *
+ * <p>
  * 全局异常处理
  */
 @Slf4j
@@ -56,7 +58,9 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result<String> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error(getStackTrace(e));
-        return Result.fail(ResultCode.FAILURE, e.getBindingResult().getFieldError().getDefaultMessage());
+        AtomicReference<String> msg = new AtomicReference<>();
+        Optional.ofNullable(e.getBindingResult().getFieldError()).ifPresent(error -> msg.set(error.getDefaultMessage()));
+        return Result.fail(ResultCode.FAILURE, msg.get());
     }
 
     /**
