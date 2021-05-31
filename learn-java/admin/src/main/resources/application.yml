@@ -54,12 +54,16 @@ spring:
       thread-name-prefix: learn-scheduling-
       pool:
         size: 3
-
-#  elasticsearch:
-#    rest:
-#      uris: http://172.28.200.85:9200
-#      read-timeout: 30s
-#      connection-timeout: 5s
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  elasticsearch:
+    rest:
+      uris: http://172.28.200.85:9200
+      read-timeout: 30s
+      connection-timeout: 5s
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml
@@ -94,13 +98,6 @@ security:
     header: Token
     token-validity-in-hours: 2
     online-key: Bearer
-
-task:
-  pool:
-    core-pool-size: 5
-    max-pool-size: 10
-    keep-alive-seconds: 60
-    queue-capacity: 20
 
 logging:
   config: classpath:logback-spring.xml
