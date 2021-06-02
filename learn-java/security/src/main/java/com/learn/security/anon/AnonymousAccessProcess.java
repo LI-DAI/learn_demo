@@ -4,9 +4,11 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableSet;
 import com.learn.security.config.SecurityProperties;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -23,21 +25,17 @@ import static com.learn.common.constant.Constant.ANON_CACHE_KEY;
  * @author LD
  * @date 2021/4/23 16:41
  */
-public class AnonymousAccessProcess {
+@Component
+public class AnonymousAccessProcess implements InitializingBean {
+
+    public static Cache<String, Set<String>> anonymousCache;
 
     private final SecurityProperties properties;
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-    public static Cache<String, Set<String>> anonymousCache;
-
-    public static void loadAnonymousAccessProcess(RequestMappingHandlerMapping requestMappingHandlerMapping, SecurityProperties properties) {
-        new AnonymousAccessProcess(requestMappingHandlerMapping, properties);
-    }
-
     private AnonymousAccessProcess(RequestMappingHandlerMapping requestMappingHandlerMapping, SecurityProperties properties) {
         this.requestMappingHandlerMapping = requestMappingHandlerMapping;
         this.properties = properties;
-        init();
     }
 
     public void init() {
@@ -58,12 +56,15 @@ public class AnonymousAccessProcess {
                 anonymousUri.addAll(patterns);
             }
         }
-
         Set<String> propertiesUri = properties.getAnonUri();
         Set<String> anon = ImmutableSet.of(anonymousUri, propertiesUri).stream().flatMap(Collection::stream).collect(Collectors.toSet());
 
         anonymousCache = CacheBuilder.newBuilder().maximumSize(3).build();
-
         anonymousCache.put(ANON_CACHE_KEY, anon);
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        init();
     }
 }

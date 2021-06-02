@@ -42,14 +42,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final PathAccessDecisionManager pathAccessDecisionManager;
     private final PathFilterInvocationSecurityMetadataSource securityMetadataSource;
     private final PathSecurityService pathSecurityService;
-    private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-    public WebSecurityConfig(SecurityProperties properties, PathAccessDecisionManager pathAccessDecisionManager, PathFilterInvocationSecurityMetadataSource securityMetadataSource, PathSecurityService pathSecurityService, RequestMappingHandlerMapping requestMappingHandlerMapping) {
+    public WebSecurityConfig(SecurityProperties properties, PathAccessDecisionManager pathAccessDecisionManager, PathFilterInvocationSecurityMetadataSource securityMetadataSource, PathSecurityService pathSecurityService) {
         this.properties = properties;
         this.pathAccessDecisionManager = pathAccessDecisionManager;
         this.securityMetadataSource = securityMetadataSource;
         this.pathSecurityService = pathSecurityService;
-        this.requestMappingHandlerMapping = requestMappingHandlerMapping;
     }
 
     @Override
@@ -65,7 +63,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        AnonymousAccessProcess.loadAnonymousAccessProcess(requestMappingHandlerMapping, properties);
         http
                 .addFilterBefore(new JwtAuthenticationFilter(pathSecurityService, properties), UsernamePasswordAuthenticationFilter.class)
                 //禁用csrf,
