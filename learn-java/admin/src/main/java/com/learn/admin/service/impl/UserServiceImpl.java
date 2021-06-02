@@ -1,9 +1,12 @@
 package com.learn.admin.service.impl;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.learn.admin.dao.UserMapper;
 import com.learn.admin.entity.User;
@@ -97,4 +100,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         IoUtil.close(inputStream);
     }
 
+    public IPage<User> queryPages(Integer pageNum, Integer pageSize, String username, String nickname) {
+        Wrapper<User> wrapper = Wrappers.<User>lambdaQuery()
+                .and(StrUtil.isNotBlank(username), query -> query.like(User::getUsername, username))
+                .and(StrUtil.isNotBlank(nickname), query -> query.like(User::getNickname, nickname));
+        return this.page(new Page<>(pageNum, pageSize), wrapper);
+    }
 }

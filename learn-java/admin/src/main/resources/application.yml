@@ -5,43 +5,16 @@ spring:
     active: dev
   application:
     name: admin
-  datasource:
-    url: jdbc:mysql://rm-uf65wgf088nv3k461oo.mysql.rds.aliyuncs.com:3306/bmsys?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
-    username: ld
-    password: Ld1213+@
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # hikari数据库连接池
-    hikari:
-      pool-name: Retail_HikariCP
-      minimum-idle: 5 #最小空闲连接数量
-      idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
-      maximum-pool-size: 10 #连接池最大连接数，默认是10
-      auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
-      max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-      connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
-      connection-test-query: SELECT 1
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
   cache:
     type: redis
-  redis:
-    database: 0
-    host: localhost
-    password:
-    port: 6379
-    timeout: 1000ms
-    lettuce:
-      pool:
-        max-active: 8
-        max-idle: 8
-        min-idle: 0
-        max-wait: -1ms
   servlet:
     multipart:
       enabled: true
       max-file-size: 100MB
-  #task和scheduler配置，有默认配置
+#  #task和scheduler配置，有默认配置
   task:
     execution:
       threadNamePrefix: learn-task-
@@ -54,16 +27,6 @@ spring:
       thread-name-prefix: learn-scheduling-
       pool:
         size: 3
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-  elasticsearch:
-    rest:
-      uris: http://172.28.200.85:9200
-      read-timeout: 30s
-      connection-timeout: 5s
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml

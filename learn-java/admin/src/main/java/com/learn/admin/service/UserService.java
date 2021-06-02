@@ -1,5 +1,6 @@
 package com.learn.admin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.learn.admin.entity.User;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,5 +45,16 @@ public interface UserService extends IService<User> {
      * @param file 用户信息文件
      */
     void importUsers(MultipartFile file) throws IOException;
+
+    /**
+     * 分页获取用户
+     *
+     * @param pageNum  页码
+     * @param pageSize 页数
+     * @param username 用户名
+     * @param nickname 昵称
+     * @return /
+     */
+    IPage<User> queryPages(Integer pageNum, Integer pageSize, String username, String nickname);
 
 }

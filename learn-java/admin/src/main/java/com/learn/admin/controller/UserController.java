@@ -1,12 +1,11 @@
 package com.learn.admin.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.learn.admin.entity.User;
 import com.learn.admin.service.UserService;
 import com.learn.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,5 +29,13 @@ public class UserController {
     public Result<String> importUsers(@RequestParam("file") MultipartFile file) throws IOException {
         userService.importUsers(file);
         return Result.data(null);
+    }
+
+    @GetMapping("/page")
+    public Result<IPage<User>> queryPages(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                          @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                          @RequestParam(required = false, value = "username") String username,
+                                          @RequestParam(required = false, value = "nickname") String nickname) {
+        return Result.data(userService.queryPages(pageNum, pageSize, username, nickname));
     }
 }

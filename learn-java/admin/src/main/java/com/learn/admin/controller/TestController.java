@@ -6,7 +6,6 @@ import com.learn.common.entity.Page;
 import com.learn.common.entity.Result;
 import com.learn.security.anon.AnonymousAccess;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +30,5 @@ public class TestController {
         Page<String> page = RedisUtil.pageScan("*", 3, 10);
         return Result.data(page);
     }
-
 
 }
