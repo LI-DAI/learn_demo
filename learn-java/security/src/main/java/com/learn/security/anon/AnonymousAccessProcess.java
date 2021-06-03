@@ -64,7 +64,7 @@ public class AnonymousAccessProcess implements InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         init();
     }
 }
