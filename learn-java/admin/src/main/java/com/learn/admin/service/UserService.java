@@ -17,8 +17,8 @@ public interface UserService extends IService<User> {
     /**
      * 获取User
      *
-     * @param username
-     * @return
+     * @param username 用户名
+     * @return 用户
      */
     User findUserByUsername(String username);
 
@@ -26,7 +26,7 @@ public interface UserService extends IService<User> {
      * 注册
      *
      * @param user 用户信息
-     * @return
+     * @return true：注册成功
      */
     boolean register(User user);
 
@@ -43,6 +43,7 @@ public interface UserService extends IService<User> {
      * 批量导入用户
      *
      * @param file 用户信息文件
+     * @throws IOException /
      */
     void importUsers(MultipartFile file) throws IOException;
 

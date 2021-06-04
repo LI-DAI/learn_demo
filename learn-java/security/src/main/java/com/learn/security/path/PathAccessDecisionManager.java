@@ -21,12 +21,6 @@ public class PathAccessDecisionManager implements AccessDecisionManager {
 
     /**
      * 权限判断
-     *
-     * @param authentication
-     * @param object
-     * @param configAttributes
-     * @throws AccessDeniedException
-     * @throws InsufficientAuthenticationException
      */
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {

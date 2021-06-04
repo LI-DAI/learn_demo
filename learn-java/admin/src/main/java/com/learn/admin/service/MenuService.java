@@ -3,7 +3,6 @@ package com.learn.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.learn.admin.entity.Menu;
 
-
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public interface MenuService extends IService<Menu> {
     /**
      * 数据库加载所有权限
      *
-     * @return
+     * @return 所有菜单
      */
     List<Menu> loadAllMenus();
 
@@ -23,7 +22,7 @@ public interface MenuService extends IService<Menu> {
      * 获取用户权限
      *
      * @param userId 用户唯一ID
-     * @return
+     * @return 菜单列表
      */
     List<Menu> getMenusByUserId(Integer userId);
 }

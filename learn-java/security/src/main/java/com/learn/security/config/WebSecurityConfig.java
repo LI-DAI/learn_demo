@@ -3,7 +3,6 @@ package com.learn.security.config;
 import cn.hutool.core.convert.Convert;
 import com.learn.common.entity.Result;
 import com.learn.common.entity.ResultCode;
-import com.learn.security.anon.AnonymousAccessProcess;
 import com.learn.security.path.PathAccessDecisionManager;
 import com.learn.security.path.PathFilterInvocationSecurityMetadataSource;
 import com.learn.security.service.PathSecurityService;
@@ -22,7 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.Set;
 
@@ -97,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring().antMatchers(anonymousAccess())
                 .antMatchers("/websocket/**")
                 .antMatchers(HttpMethod.OPTIONS, "/**");

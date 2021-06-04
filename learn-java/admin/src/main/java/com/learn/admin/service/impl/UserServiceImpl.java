@@ -100,6 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         IoUtil.close(inputStream);
     }
 
+    @Override
     public IPage<User> queryPages(Integer pageNum, Integer pageSize, String username, String nickname) {
         Wrapper<User> wrapper = Wrappers.<User>lambdaQuery()
                 .and(StrUtil.isNotBlank(username), query -> query.like(User::getUsername, username))

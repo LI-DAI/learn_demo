@@ -1,6 +1,5 @@
 package com.learn.admin.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.learn.admin.dao.MenuMapper;
 import com.learn.admin.entity.Menu;
@@ -46,9 +45,4 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return result;
     }
 
-
-    public void clearMenuCache(List<Integer> userIds) {
-        if (CollectionUtil.isEmpty(userIds)) {
-        }
-    }
 }

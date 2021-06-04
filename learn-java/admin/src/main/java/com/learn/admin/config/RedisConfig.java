@@ -19,6 +19,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import static org.springframework.data.redis.cache.RedisCacheConfiguration.defaultCacheConfig;
@@ -32,10 +33,8 @@ import static org.springframework.data.redis.cache.RedisCacheConfiguration.defau
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
 
-
     private static final StringRedisSerializer STRING_REDIS_SERIALIZER = new StringRedisSerializer();
-    private static final GenericJackson2JsonRedisSerializer GENERIC_JACKSON_2_JSON_REDIS_SERIALIZER
-            = new GenericJackson2JsonRedisSerializer();
+    private static final GenericJackson2JsonRedisSerializer GENERIC_JACKSON_2_JSON_REDIS_SERIALIZER = new GenericJackson2JsonRedisSerializer();
 
     private final LettuceConnectionFactory connectionFactory;
 
@@ -61,7 +60,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     @Override
     public CacheResolver cacheResolver() {
-        return new SimpleCacheResolver(cacheManager());
+        return new SimpleCacheResolver(Objects.requireNonNull(cacheManager()));
     }
 
     /**
@@ -69,6 +68,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      */
     @Bean
     @Override
+    @SuppressWarnings("NullableProblems")
     public CacheErrorHandler errorHandler() {
         // 异常处理，当Redis发生异常时，打印日志，但是程序正常走
         log.info("初始化 -> [{}]", "Redis CacheErrorHandler");
