@@ -54,9 +54,6 @@ security:
       - /v3/api-docs
       - /webjars/**
       - /webSocket/**
-      - /learn/login
-      - /learn/refresh
-      - /user/register
       - /es/**
     header: Token
     token-validity-in-hours: 2

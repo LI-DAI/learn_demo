@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.learn.admin.entity.User;
 import com.learn.admin.service.UserService;
 import com.learn.common.entity.Result;
+import com.learn.security.anon.AnonymousAccess;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,4 +40,17 @@ public class UserController {
                                           @RequestParam(required = false, value = "nickname") String nickname) {
         return Result.data(userService.queryPages(pageNum, pageSize, username, nickname));
     }
+
+    @PostMapping("/register")
+    @AnonymousAccess
+    public Result<Object> register(@RequestBody @Validated User user) {
+        return Result.data(userService.register(user));
+    }
+
+    @PutMapping("/update")
+    public Result<Object> updateUser(@RequestBody @Validated User user) {
+        return Result.data(userService.updateUser(user));
+    }
+
+
 }

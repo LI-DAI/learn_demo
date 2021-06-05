@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.learn.admin.entity.User;
 import com.learn.admin.utils.RedisUtil;
 import com.learn.common.entity.Result;
+import com.learn.security.anon.AnonymousAccess;
 import com.learn.security.config.SecurityProperties;
 import com.learn.security.entity.LoginUser;
 import com.learn.security.utils.JwtTokenUtil;
@@ -43,6 +44,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
+    @AnonymousAccess
     public Result<Object> login(@RequestBody User user) {
         String username = user.getUsername();
         String password = user.getPassword();
@@ -66,6 +68,7 @@ public class LoginController {
     }
 
     @PostMapping("/refresh")
+    @AnonymousAccess
     public Result<Object> refreshToken(String token) {
         if (JwtTokenUtil.isExpiration(token)) {
             return Result.fail(EXPIRE_TOKEN);
