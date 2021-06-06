@@ -10,6 +10,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
@@ -51,12 +52,12 @@ public class FastDFSClientUtil {
         return storePath.getPath();
     }
 
-    public static void deleteFile(String path) {
-        deleteFile(DEFAULT_GROUP, path);
-    }
 
-    public static void deleteFile(String path, String group) {
-        storageClient.deleteFile(group, path);
+    public static void deleteFile(String path) {
+        if (!path.startsWith(DEFAULT_GROUP)) {
+            path = DEFAULT_GROUP + File.separator + path;
+        }
+        storageClient.deleteFile(path);
     }
 
     public static InputStream download(String path) {
