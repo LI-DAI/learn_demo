@@ -54,7 +54,7 @@ public class FastDFSController {
                 break;
             }
         }
-        response.setHeader("Content-Disposition", "attachment;filename" + filename);
+        response.setHeader("Content-Disposition", "attachment;filename=" + filename);
         InputStream inputStream = FastDFSClientUtil.download(path);
         ServletOutputStream outputStream = response.getOutputStream();
         IoUtil.copy(inputStream, outputStream);

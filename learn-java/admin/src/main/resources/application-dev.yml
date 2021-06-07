@@ -46,7 +46,8 @@ fdfs:
   so-timeout: 1000
   connect-timeout: 1000
   tracker-list:
-    - 192.168.0.103:22122
+    - 172.28.200.85:22122
+#    - 192.168.0.103:22122
   pool:
     max-total: 50 #连接池最大连接数50
     test-while-idle: true
