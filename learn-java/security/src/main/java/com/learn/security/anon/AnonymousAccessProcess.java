@@ -24,6 +24,8 @@ import static com.learn.common.constant.Constant.ANON_CACHE_KEY;
 /**
  * @author LD
  * @date 2021/4/23 16:41
+ * <p>
+ * 匿名访问注解处理器
  */
 @Component
 public class AnonymousAccessProcess implements InitializingBean {

@@ -3,17 +3,14 @@ package com.learn.admin.utils;
 import com.github.tobato.fastdfs.domain.fdfs.MetaData;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.google.common.collect.Sets;
 import com.learn.common.utils.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -26,7 +23,7 @@ public class FastDFSClientUtil {
     public static final String FILENAME = "filename";
     public static final String EXTENSION = "extension";
 
-    private static final String DEFAULT_GROUP = "group1";
+    public static final String DEFAULT_GROUP = "group1";
 
     private static FastFileStorageClient storageClient;
 
@@ -41,9 +38,7 @@ public class FastDFSClientUtil {
     }
 
     public static String uploadFile(MultipartFile file) throws IOException {
-        HashSet<MetaData> metaData = Sets.newHashSet(new MetaData(FILENAME, file.getOriginalFilename()),
-                new MetaData(EXTENSION, FilenameUtils.getExtension(file.getOriginalFilename())));
-        return uploadFileAndMetaData(file, metaData);
+        return uploadFileAndMetaData(file, null);
     }
 
     public static String uploadFileAndMetaData(MultipartFile file, Set<MetaData> metaData) throws IOException {
@@ -54,7 +49,7 @@ public class FastDFSClientUtil {
 
     public static void deleteFile(String path) {
         if (!path.startsWith(DEFAULT_GROUP)) {
-            path = DEFAULT_GROUP + File.separator + path;
+            path = DEFAULT_GROUP + "/"+ path;
         }
         storageClient.deleteFile(path);
     }
