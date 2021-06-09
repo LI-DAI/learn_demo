@@ -16,7 +16,7 @@ spring:
       connection-test-query: SELECT 1
   redis:
     database: 0
-    host: localhost
+    host: 101.132.145.137
     password:
     port: 6379
     timeout: 1000ms
@@ -38,7 +38,7 @@ spring:
     password: guest
   elasticsearch:
     rest:
-      uris: http://172.28.200.85:9200
+      uris: http://101.132.145.137:9200
       read-timeout: 30s
       connection-timeout: 5s
 
@@ -46,8 +46,7 @@ fdfs:
   so-timeout: 1000
   connect-timeout: 1000
   tracker-list:
-    - 172.28.200.85:22122
-#    - 192.168.0.103:22122
+    - 101.132.145.137:22122
   pool:
     max-total: 50 #连接池最大连接数50
     test-while-idle: true

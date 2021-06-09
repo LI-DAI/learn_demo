@@ -21,7 +21,6 @@ import java.util.Set;
  * @date 2021/6/5 12:35
  */
 @Slf4j
-@Component
 public class FastDFSClientUtil {
 
     public static final String FILENAME = "filename";
