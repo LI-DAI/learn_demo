@@ -32,6 +32,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FileInfo> implement
 
     @Override
     public FileInfo uploadFile(MultipartFile file) throws IOException {
+        if (file == null || file.isEmpty()) return null;
         String filename = file.getOriginalFilename();
         String ext = FilenameUtils.getExtension(filename);
         String path = FastDFSClientUtil.uploadFile(file);
@@ -50,7 +51,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FileInfo> implement
     }
 
     @Override
-    public void downloadFile(Integer fileId, HttpServletResponse response) throws IOException {
+    public void downloadFile(Integer fileId, HttpServletResponse response) {
         FileInfo fileInfo = getById(fileId);
         if (fileInfo == null) {
             throw new BadRequestException("当前文件不存在，无法下载！");

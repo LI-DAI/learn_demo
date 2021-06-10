@@ -35,5 +35,5 @@ public interface FileService extends IService<FileInfo> {
      * @param fileId   文件ID
      * @param response /
      */
-    void downloadFile(Integer fileId, HttpServletResponse response) throws IOException;
+    void downloadFile(Integer fileId, HttpServletResponse response);
 }
