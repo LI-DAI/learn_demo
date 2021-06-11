@@ -55,7 +55,6 @@ import java.util.stream.Stream;
  */
 @RestController
 @RequestMapping("/es")
-@ConditionalOnBean(RestHighLevelClient.class)
 public class ESController {
 
     private final RestHighLevelClient restHighLevelClient;
