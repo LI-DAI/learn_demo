@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
@@ -18,6 +17,7 @@ import java.util.Set;
  * @date 2021/6/5 12:35
  */
 @Slf4j
+@SuppressWarnings(value = "unused")
 public class FastDFSClientUtil {
 
     public static final String FILENAME = "filename";
