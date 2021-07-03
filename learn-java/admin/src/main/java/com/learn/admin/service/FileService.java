@@ -2,6 +2,8 @@ package com.learn.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.learn.admin.entity.FileInfo;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -36,4 +38,20 @@ public interface FileService extends IService<FileInfo> {
      * @param response /
      */
     void downloadFile(Integer fileId, HttpServletResponse response);
+
+    /**
+     * 下载
+     *
+     * @param fileId 文件ID
+     * @return /
+     */
+    InputStreamResource downloadFile(Integer fileId, HttpHeaders headers);
+
+
+    /**
+     * 预览图片
+     *
+     * @param fileId 文件ID
+     */
+    void preview(Integer fileId, HttpServletResponse response);
 }

@@ -9,6 +9,8 @@ import com.learn.admin.utils.FastDFSClientUtil;
 import com.learn.common.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,6 +69,39 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FileInfo> implement
             inputStream = FastDFSClientUtil.download(path);
             IoUtil.copy(inputStream, outputStream);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        } finally {
+            IoUtil.close(outputStream);
+            IoUtil.close(inputStream);
+        }
+    }
+
+    public InputStreamResource downloadFile(Integer fileId, HttpHeaders headers) {
+        FileInfo fileInfo = getById(fileId);
+        if (fileInfo == null) {
+            throw new BadRequestException("当前文件不存在，无法下载！");
+        }
+        String path = fileInfo.getPath();
+        String filename = fileInfo.getFilename();
+        headers.set("Content-Disposition", "attachment;filename=" + filename);
+        InputStream inputStream = FastDFSClientUtil.download(path);
+        return new InputStreamResource(inputStream);
+    }
+
+    public void preview(Integer fileId, HttpServletResponse response) {
+        FileInfo fileInfo = getById(fileId);
+        if (fileInfo == null) {
+            throw new BadRequestException("当前文件不存在，无法下载！");
+        }
+        response.setContentType("image/" + fileInfo.getExt());
+        response.addHeader("Content-Disposition", "attachment;filename=" + fileInfo.getFilename());
+        InputStream inputStream = null;
+        ServletOutputStream outputStream = null;
+        try {
+            inputStream = FastDFSClientUtil.download(fileInfo.getPath());
+            outputStream = response.getOutputStream();
+            IoUtil.copy(inputStream, outputStream);
+        } catch (IOException e) {
             log.error(e.getMessage(), e);
         } finally {
             IoUtil.close(outputStream);

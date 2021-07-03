@@ -2,7 +2,6 @@ package com.learn.admin.controller;
 
 import com.learn.admin.service.FileService;
 import com.learn.common.entity.Result;
-import com.learn.security.anon.AnonymousAccess;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,5 +40,10 @@ public class FileController {
     @PostMapping("/download")
     public void downloadFile(Integer fileId, HttpServletResponse response) throws IOException {
         fileService.downloadFile(fileId, response);
+    }
+
+    @PostMapping("/preview")
+    public void preview(Integer fileId, HttpServletResponse response) {
+        fileService.preview(fileId, response);
     }
 }
