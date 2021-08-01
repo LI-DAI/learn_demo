@@ -31,4 +31,9 @@ public class TestController {
         return Result.data(page);
     }
 
+    @GetMapping("/")
+    public Result<Object> test(){
+        return Result.data(null);
+    }
+
 }
