@@ -38,7 +38,7 @@ public class FileController {
     }
 
     @PostMapping("/download")
-    public void downloadFile(Integer fileId, HttpServletResponse response) throws IOException {
+    public void downloadFile(Integer fileId, HttpServletResponse response) {
         fileService.downloadFile(fileId, response);
     }
 
