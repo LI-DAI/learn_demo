@@ -41,6 +41,8 @@ spring:
       uris: http://101.132.145.137:9200
       read-timeout: 30s
       connection-timeout: 5s
+      username: elastic
+      password: pwd_elastic
 
 fdfs:
   so-timeout: 1000
