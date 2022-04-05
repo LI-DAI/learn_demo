@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://rm-uf65wgf088nv3k461oo.mysql.rds.aliyuncs.com:3306/bmsys?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
-    username: ld
-    password: Ld1213+@
+    url: jdbc:mysql://192.168.1.108:3306/bmsys?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT
+    username: root
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     # hikari数据库连接池
     hikari:
@@ -16,7 +16,7 @@ spring:
       connection-test-query: SELECT 1
   redis:
     database: 0
-    host: 101.132.145.137
+    host: 192.168.1.108
     password:
     port: 6379
     timeout: 1000ms
@@ -30,30 +30,24 @@ spring:
     multipart:
       enabled: true
       max-file-size: 100MB
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
   elasticsearch:
     rest:
       uris: http://101.132.145.137:9200
       read-timeout: 30s
       connection-timeout: 5s
-      username: elastic
-      password: pwd_elastic
+#      username: elastic
+#      password: pwd_elastic
 
-fdfs:
-  so-timeout: 1000
-  connect-timeout: 1000
-  tracker-list:
-    - 101.132.145.137:22122
-  pool:
-    max-total: 50 #连接池最大连接数50
-    test-while-idle: true
-    block-when-exhausted: true #当缓存池耗尽是否阻塞，默认为true  false直接报异常，true阻塞直到超时
-    max-wait-millis: 1000 #连接耗尽最大等待时间 毫秒，超时抛出异常
-    min-evictable-idle-time-millis: 18000 #休眠时间超过该值则视为过期时间
-    time-between-eviction-runs-millis: 6000 #60秒进行一次后台清理
-    num-tests-per-eviction-run: -1 #清理时检查所有线程
+#fdfs:
+#  so-timeout: 1000
+#  connect-timeout: 1000
+#  tracker-list:
+#    - 101.132.145.137:22122
+#  pool:
+#    max-total: 50 #连接池最大连接数50
+#    test-while-idle: true
+#    block-when-exhausted: true #当缓存池耗尽是否阻塞，默认为true  false直接报异常，true阻塞直到超时
+#    max-wait-millis: 1000 #连接耗尽最大等待时间 毫秒，超时抛出异常
+#    min-evictable-idle-time-millis: 18000 #休眠时间超过该值则视为过期时间
+#    time-between-eviction-runs-millis: 6000 #60秒进行一次后台清理
+#    num-tests-per-eviction-run: -1 #清理时检查所有线程

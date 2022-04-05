@@ -27,7 +27,7 @@ public class TestController {
         UserRole test = (UserRole) RedisUtil.get("test");
         log.info("redis user role is {}", test);
         System.out.println(RedisUtil.scan("*"));
-        Page<String> page = RedisUtil.pageScan("*", 3, 10);
+        Page<String> page = RedisUtil.pageScan("*", 1, 10);
         return Result.data(page);
     }
 

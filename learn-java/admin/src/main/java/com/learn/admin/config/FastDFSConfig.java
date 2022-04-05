@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Import;
  * @date 2021/6/5 12:33
  */
 @Configuration
-@Import(FdfsClientConfig.class)
+//@Import(FdfsClientConfig.class)
 public class FastDFSConfig {
 }
