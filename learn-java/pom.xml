@@ -21,16 +21,17 @@
         <module>common</module>
         <module>security</module>
         <module>admin</module>
+        <module>shardingjdbc</module>
     </modules>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
         <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
         <hutool-version>5.3.5</hutool-version>
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
-        <fastjson.version>1.2.75</fastjson.version>
+        <fastjson.version>2.0.2</fastjson.version>
         <elasticsearch.version>7.8.0</elasticsearch.version>
         <jwt.version>0.11.2</jwt.version>
     </properties>
